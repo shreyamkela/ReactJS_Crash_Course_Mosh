@@ -1,8 +1,11 @@
+// There are 4 counter components inside 1 counters component
+
 import React, { Component } from "react"; // using { Component } with object destructuring - https://stackoverflow.com/questions/41768205/difference-between-import-react-and-import-component-syntax , https://medium.com/@AnnaJS15/a-simple-guide-to-destructuring-props-in-react-f02e6e51143a
 
 class Counter extends Component {
   state = {
-    count: 0,
+    // count: 0, // NOTE count is renamed to value when adding this.props.value
+    value: this.props.value, // value has been set for each counter in the Counters component and can be used here
     tags: []
   };
 
@@ -50,12 +53,14 @@ class Counter extends Component {
     // Increment the counter
     console.log("Increment Clicked", this); // NOTE this gives error. We use handleIncrement as a reference and so we cannot use this keyword, because this keyword cannot point to anything when it is being manipulated by its reference. To manipulate this keyword with reference we need to add constructor to this counter class. When a constructor is added, then the reference would be able to use the this keyword as constructor will construct the object. In all other methods, such as renderTags we use renderTags() therefore it is not a reference rather we are using the methods of a class as if they were static methods. But in handleIncrement we treat handleIncrement as a nonstatic method, as if a class object is using it. So without the this being constructed, we cannot use this. There we have to use the constructor.
     // this.state.count++; // This doesnt work in React. React does not know that counter is updated and does not update the view. To update the counter we have to use a method provided by the Component class - setState
-    this.setState({ count: this.state.count + 1 }); // What ever has to be updated in the state is mentioned in the setState. It will checnge/override the current properties of state. This is different than angular in which changes are reflected automatically using monkey pipe
+    this.setState({ value: this.state.value + 1 }); // What ever has to be updated in the state is mentioned in the setState. It will checnge/override the current properties of state. This is different than angular in which changes are reflected automatically using monkey pipe
     // When setState is used, React registers an async call to the render method. That is, render will be called sometime after set state is called.
     console.log(product);
   };
 
   render() {
+    //console.log("props", this.props); // All react components have a JS property called props and here it contains all the attributes set by the counters component
+
     return (
       <div>
         <span style={this.styles} className={this.getBadgeClasses()}>
@@ -88,13 +93,13 @@ class Counter extends Component {
   getBadgeClasses() {
     // Passing functions into jsx
     let classes = "badge m-2 badge-";
-    classes += this.state.count === 0 ? "warning" : "primary"; //  Appending this CSS to the classes variable depending on the count. If not zero, colour is blue, else it is zero and yellow/warning colour
+    classes += this.state.value === 0 ? "warning" : "primary"; //  Appending this CSS to the classes variable depending on the count. If not zero, colour is blue, else it is zero and yellow/warning colour
     return classes;
   }
 
   formatCount() {
     // Passing functions into jsx
-    const { count } = this.state; // Save value of the count key of this.state into a count variable - object destructuring
+    const { value: count } = this.state; // Save value of the count key of this.state into a count variable - object destructuring
     return count === 0 ? "Zero" : count;
   }
 }
