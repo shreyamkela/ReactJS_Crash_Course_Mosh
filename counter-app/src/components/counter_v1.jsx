@@ -43,13 +43,16 @@ class Counter extends Component {
   //     console.log("Increment Clicked", this); // NOTE this gives error. We use handleIncrement as a reference and so we cannot use this keyword, because this keyword cannot point to anything when it is being manipulated by its reference. To manipulate this keyword with reference we need to add constructor to this counter class. When a constructor is added, then the reference would be able to use the this keyword as constructor will construct the object. In all other methods, such as renderTags we use renderTags() therefore it is not a reference rather we are using the methods of a class as if they were static methods. But in handleIncrement we treat handleIncrement as a nonstatic method, as if a class object is using it. So without the this being constructed, we cannot use this. There we have to use the constructor.
   //   }
 
-  handleIncrement = () => {
+  handleIncrement = product => {
+    // id is passed with the arrow function inside onCLick. That id is the product
     // Using arrow function to serve handleIncrement event handler, without binding with constructor. This method is experimental according to Mosh. Can just use the constructor and non-arrow function event handler if it breaks
     // This is an event handler
     // Increment the counter
     console.log("Increment Clicked", this); // NOTE this gives error. We use handleIncrement as a reference and so we cannot use this keyword, because this keyword cannot point to anything when it is being manipulated by its reference. To manipulate this keyword with reference we need to add constructor to this counter class. When a constructor is added, then the reference would be able to use the this keyword as constructor will construct the object. In all other methods, such as renderTags we use renderTags() therefore it is not a reference rather we are using the methods of a class as if they were static methods. But in handleIncrement we treat handleIncrement as a nonstatic method, as if a class object is using it. So without the this being constructed, we cannot use this. There we have to use the constructor.
     // this.state.count++; // This doesnt work in React. React does not know that counter is updated and does not update the view. To update the counter we have to use a method provided by the Component class - setState
     this.setState({ count: this.state.count + 1 }); // What ever has to be updated in the state is mentioned in the setState. It will checnge/override the current properties of state. This is different than angular in which changes are reflected automatically using monkey pipe
+    // When setState is used, React registers an async call to the render method. That is, render will be called sometime after set state is called.
+    console.log(product);
   };
 
   render() {
@@ -58,8 +61,17 @@ class Counter extends Component {
         <span style={this.styles} className={this.getBadgeClasses()}>
           {this.formatCount()}
         </span>
+        {/*
         <button
           onClick={this.handleIncrement}
+          className="btn btn-secondary btn-sm"
+        >
+         onClick of react is not the same as onclick of html. This onClick can take a reference to a function NOTE: it cannot call a function or a function with parameteres. We can define another arrow functiondoHandleIncrement to pass an id into handleIncrement so that an id also goes with the particular button clicked. Or, we can straight away pass an arrow function inside the onClick that passes an id into handleIncrement and calls it
+        */}
+        <button
+          onClick={() => {
+            this.handleIncrement({ id: 1 });
+          }}
           className="btn btn-secondary btn-sm"
         >
           Increment
