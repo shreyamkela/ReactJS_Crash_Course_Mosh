@@ -6,6 +6,15 @@ class Counter extends Component {
     tags: []
   };
 
+  constructor() {
+    // Counter is a child class of Component. Therefore it has to first call super() for Component inside this constructor, before Counter can implement its own code in the constructor. Counter has to inherit all, inside the constructor and then only it can use this keyword.
+    super();
+    // console.log("Constructor", this);
+    // Now we need the bind method to bind the instance created by constructor, to the handleIncrement, so that each time handleIncrement is referenced, it points to the current instance. This is possible by the property in that functions in JS are objects. Therefore functions themselves can have properties and methods. One of the methods is bind method- this.handleIncrement.bind(this) - will return a new instance of handleIncrement. Inside this new instance of the function, this keyword will always refer to the current counter object. This can be used to reset the handleIncrement function so that handleIncrement can be used with a new instance of Counter. Otherwise, each different counter object/cart item will be using the same counter which is bad.
+    // this.handleIncrement.bind(this); // bind a new instance of handleIncrement to the current this
+    this.handleIncrement = this.handleIncrement.bind(this); // bind a new instance of handleIncrement to the current this, and return as this.handleIncrement, so that this.handleIncrement of the current object is different than this.handleIncrement of the previous object
+  }
+
   styles = {
     // CSS styles object to be passed into jsx. Properties are written in camel case.
     fontSize: 10,
@@ -28,7 +37,7 @@ class Counter extends Component {
 
   handleIncrement() {
     // Increment the counter
-    // console.log("Increment Clicked", this.state.count); // NOTE this gives error. We use handleIncrement as a reference and so we cannot use this keyword, because this keyword cannot point to anything when it is being manipulated by its reference. To manipulate this keyword with reference we need to add constructor to this counter class. When a constructor is added, then the reference would be able to use the this keyword as constructor will construct the object. In all other methods, such as renderTags we use renderTags() therefore it is not a reference rather we are using the methods of a class as if they were static methods. But in handleIncrement we treat handleIncrement as a nonstatic method, as if a class object is using it. So without the this being constructed, we cannot use this. There we have to use the constructor.
+    console.log("Increment Clicked", this); // NOTE this gives error. We use handleIncrement as a reference and so we cannot use this keyword, because this keyword cannot point to anything when it is being manipulated by its reference. To manipulate this keyword with reference we need to add constructor to this counter class. When a constructor is added, then the reference would be able to use the this keyword as constructor will construct the object. In all other methods, such as renderTags we use renderTags() therefore it is not a reference rather we are using the methods of a class as if they were static methods. But in handleIncrement we treat handleIncrement as a nonstatic method, as if a class object is using it. So without the this being constructed, we cannot use this. There we have to use the constructor.
   }
 
   render() {
