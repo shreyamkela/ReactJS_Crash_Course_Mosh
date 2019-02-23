@@ -60,6 +60,8 @@ class Counter extends Component {
   }
 
   handleIncrement() {
+    // Increment the counter
+    // console.log("Increment Clicked", this.state.count); // NOTE this gives error. We use handleIncrement as a reference and so we cannot use this keyword (it is undefined), because this keyword cannot point to anything when it is being manipulated by its reference. To manipulate this keyword with reference we need to add constructor to this counter class. When a constructor is added, then the reference would be able to use the this keyword as constructor will construct the object. In all other methods, such as renderTags we use renderTags() therefore it is not a reference rather we are using the methods of a class as if they were static methods. But in handleIncrement we treat handleIncrement as a nonstatic method, as if a class object is using it. So without the this being constructed, we cannot use this. There we have to use the constructor.
     console.log("Increment Clicked");
   }
 
