@@ -2,8 +2,9 @@ import React, { Component } from "react"; // using { Component } with object des
 
 class Counter extends Component {
   state = {
-    count: 0,
-    imageURL: "https://picsum.photos/200" // generate random image and pass into jsx
+    count: 1,
+    imageURL: "https://picsum.photos/200", // generate random image and pass into jsx
+    tags: ["tag1", "tag2", "tag3"]
   };
 
   styles = {
@@ -51,6 +52,12 @@ class Counter extends Component {
           {this.formatCount()}
         </span>
         <button className="btn btn-secondary btn-sm"> Increment </button>
+        <ul>
+          {this.state.tags.map(tag => (
+            <li key={tag}> {tag} </li>
+          ))}
+        </ul>
+        {/*This is how we comment in JSX, i.e multiline comment within curly braces. Now here we have eto include the tags list. We do this by using the unordered list tag. Then inside that we need to render each list item. We dont have loops in JSX, like in angular but we have the map function that we can use inside JSX to list all the elements inside an object. indie the map function we use an arrow function to list each item using li tag. Rach list item needs to have a unique id for React to be able to function properly (because if the list ids are same then react doesnt know how to track individual item changes inside the list), and for that we save the value of tage as the key itself, for the li tag */}
       </div>
     );
   }
