@@ -4,7 +4,7 @@ class Counter extends Component {
   state = {
     count: 1,
     imageURL: "https://picsum.photos/200", // generate random image and pass into jsx
-    tags: ["tag1", "tag2", "tag3"]
+    tags: []
   };
 
   styles = {
@@ -45,6 +45,20 @@ class Counter extends Component {
     // The HTML <span> tag is used for grouping and applying styles to inline elements. There is a difference between the span tag and the div tag. The span tag is used with inline elements whilst the div tag is used with block-level content.
     */
 
+  renderTags() {
+    // To pass an if else inside JSX. Here if there are no tags, we output the below string, otherwise we output the tags themselves
+    if (this.state.tags.length === 0) return <p> There are no tags! </p>;
+
+    return (
+      // To pass an iterate kind of method inside JSX. Now here we have eto include the tags list. We do this by using the unordered list tag. Then inside that we need to render each list item. We dont have loops in JSX, like in angular but we have the map function that we can use inside JSX to list all the elements inside an object. indie the map function we use an arrow function to list each item using li tag. Rach list item needs to have a unique id for React to be able to function properly (because if the list ids are same then react doesnt know how to track individual item changes inside the list), and for that we save the value of tage as the key itself, for the li tag
+      <ul>
+        {this.state.tags.map(tag => (
+          <li key={tag}> {tag} </li>
+        ))}
+      </ul>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -52,12 +66,10 @@ class Counter extends Component {
           {this.formatCount()}
         </span>
         <button className="btn btn-secondary btn-sm"> Increment </button>
-        <ul>
-          {this.state.tags.map(tag => (
-            <li key={tag}> {tag} </li>
-          ))}
-        </ul>
-        {/*This is how we comment in JSX, i.e multiline comment within curly braces. Now here we have eto include the tags list. We do this by using the unordered list tag. Then inside that we need to render each list item. We dont have loops in JSX, like in angular but we have the map function that we can use inside JSX to list all the elements inside an object. indie the map function we use an arrow function to list each item using li tag. Rach list item needs to have a unique id for React to be able to function properly (because if the list ids are same then react doesnt know how to track individual item changes inside the list), and for that we save the value of tage as the key itself, for the li tag */}
+        {this.renderTags()}
+        {/*This is how we comment in JSX, i.e multiline comment within curly braces. Here we have passed the if else method into JSX. We can also directly do an if else kind of structure inside JSX using && operator*/}
+        {this.state.tags.length === 0 && "Please create a new tag!"}{" "}
+        {/* This is using if else with &&, directly inside JSX. In Javascript, we can apply logical operators even on non-boolean objects. The && and || operators actually return the value of one of the specified operands, so if these operators are used with non-Boolean values, they will return a non-Boolean value - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_Operators */}
       </div>
     );
   }
