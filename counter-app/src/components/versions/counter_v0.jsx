@@ -67,6 +67,7 @@ class Counter extends Component {
   }
 
   render() {
+    // We can use babel js repl editor online to see how JSX converts to JS
     return (
       <div>
         <span style={this.styles} className={this.getBadgeClasses()}>
