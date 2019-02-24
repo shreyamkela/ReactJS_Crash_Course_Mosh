@@ -3,4 +3,4 @@
 - The Counter app can be used in a Shopping Cart app.
 - The app utilizes - ReactJS, HTML, CSS, Bootstrap.
 
-Note: This application is a part of the 'Complete ReactJS Crash Course' video by Mosh Hamedani, on youtube. Link to the video - https://www.youtube.com/watch?v=Ke90Tje7VS0
+**Note:** This application is a part of the 'Complete ReactJS Crash Course' video by Mosh Hamedani: https://www.youtube.com/watch?v=Ke90Tje7VS0
