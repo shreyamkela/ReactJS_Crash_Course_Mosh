@@ -1,4 +1,4 @@
-// There is 1 counters component that is the parent to 4 child counter components. The counter components are fully controlled by the counters component and there is no local state in the counter components. The counter components are 'controlled' components - no local state
+// There is 1 counters component that is the parent to 4 child counter components. The counter components are fully controlled by the counters component and there is no local state in the counter components. The counter components are 'controlled' components - no local state. A controlled component receives all the data via props and raises events when ever any data needs to be changed. The controller component handles these events and sends the data via props.
 // For previous version refer counters_v0
 
 import React, { Component } from "react";
@@ -15,7 +15,8 @@ class Counters extends Component {
   };
 
   handleReset = () => {
-    const counters = this.state.counter.map(c => {
+    // remember that to register clicks we use onClick and not onclick
+    const counters = this.state.counters.map(c => {
       c.value = 0;
       return c;
     });
@@ -34,11 +35,28 @@ class Counters extends Component {
     this.setState({ counters }); // Destructuring
   };
 
+  handleIncrement = counter => {
+    // This state changer/event handler was firstly present in the counter component. But as we wanted single source of truth so we moved all the control to counters component
+    // console.log("Increment Clicked", counter);
+    const counters = [...this.state.counters]; // ...this.state.counters uses the spread operator to clone all the items of the counters list (of the state object) into a new counters const
+    /* // But cloning with the spread operator makes such a link between the const counters object and the counters list of the state object, that when  const counters is updated, it also changes the counters list of state object. 
+    That is we are directly manipulating the state which will not be registered by react. We do not want to increment the other counter components when only 1 is changing. Therefore, we increment only the individual counter item that is changing for this current thread of execution
+    // This can be demonstrated by the following:
+    counters[0].value++;
+    console.log(this.state.counters[0]);
+    // Thus we will increment only the individual item (which is changing) of counters list. To do this we need the index of this particular counter id-value pair in the counters list
+    */
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    counters[index].value++;
+    this.setState({ counters });
+  };
+
   render() {
     return (
       <div>
         <button
-          onclick={this.handleReset}
+          onClick={this.handleReset}
           className="btn btn-primary btn-sm m-2"
         >
           Reset
@@ -64,6 +82,7 @@ class Counters extends Component {
             key={counter.id}
             counter={counter}
             onDelete={this.handleDelete}
+            onIncrement={this.handleIncrement}
           />
         ))}
         {/* Map all the items in the counters list of the state object. Map each to a counter object with a key equal to counter id */}
