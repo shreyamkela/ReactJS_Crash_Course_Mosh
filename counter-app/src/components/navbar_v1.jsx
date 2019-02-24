@@ -4,10 +4,14 @@
 // This is done here. For the previous version, refer navbar_v0
 // Can the counters_v2 and counter_v2 be also changed to an arrow function, as they do not have any state?
 
+// NOTE We cannot use lifecycle hooks inside a stateless functional component, as lifecycle hooks use class components
+
 import React from "react"; // We remove the Component import. We need the React import for the JSX syntax
 
 const NavBar = ({ totalCounters }) => {
   // We cannot use 'this' keyword as this is an arrow function. We pass the props a parameter or we use object destructuring to pass the totalCounters prop of the props
+  console.log("NavBar - Rendered");
+
   return (
     <nav className="navbar navbar-light bg-light">
       <a className="navbar-brand" href="#">

@@ -4,9 +4,20 @@
 import React, { Component } from "react"; // using { Component } with object destructuring - https://stackoverflow.com/questions/41768205/difference-between-import-react-and-import-component-syntax , https://medium.com/@AnnaJS15/a-simple-guide-to-destructuring-props-in-react-f02e6e51143a. For eg, in the object { key: value } if key and value variables have the same name then it can be just written as { key }
 
 class Counter extends Component {
+  componentDidUpdate(prevProps, prevState) {
+    // This lifecycle hook is called when a component is updated.
+    // We can use this method to compare whether any props of the component has been changed or not after the update. If no change then no need to make AJAX call. If change then make AJAX call.
+    // This is done as below:
+    console.log("prevProps: ", prevProps);
+    console.log("prevState: ", prevState);
+    // if (prevProps.counter.value !== this.props.counter.value) {
+    //   // Ajax call and get new data from server
+    // } // Else, no ajax call
+  }
   render() {
     // On chrome developer tools we can see what is being changed with each render. It would show that only this below div is changing.
     //console.log("props", this.props); // All react components have a JS property called props and here it contains all the attributes set by the counters component
+    console.log("Counter - Rendered");
 
     return (
       <div>
@@ -29,7 +40,7 @@ class Counter extends Component {
         </button>
         {/* NOTE In React -  The component that owns a piece of the state, should be the one modifying it. Therefore we cannot have a counter_v1 component deleting itself from the state of counters (when we want to delete a counter component from counters). Thus we have to include the delete logic into counters itself. Different counters are listed in the state of counters class and if we want to remove any then delete logic should also be in the counters class only  */}
         {/*We have used onDelete={this.handleDelete} in Counters class, to register an event handler prop that passes a reference to this.handleDelete so that counter object can refer to this method of the counters class. We could not have added handleDelete method in counter class itself as handleDelete manipulates the state of counters class and the component that owns a piece of the state, should be the one modifying it. Now in counter class, we can reference this method for the current object and use this event handler for the deletion of that particular counter object. This is raising and handling of events. Counter class will raise an event and Counters class will handle that event. Counters class provides the handleDelete method which can be instantiated by counter object for the current object and can be used to delete the object.*/}
-        {/* Thus onClick will make a reference or instantiate the handleDelete method of Counters class for this object as onDelete has been set as a prop in Counters class */}
+        {/* Thus onClick will make a reference or instantiate the handleDelete method of Counters class for this object as onDelete has been   as a prop in Counters class */}
         {/* We us the arrow function this.props.onDelete(this.props.counter.id) so as to pass the id of the counter object that we want to delete, to the Counters object */}
       </div>
     );

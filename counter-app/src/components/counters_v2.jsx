@@ -9,6 +9,8 @@ import Counter from "./counter_v2";
 
 class Counters extends Component {
   render() {
+    console.log("Counters - Rendered");
+
     const { onReset, counters, onDelete, onIncrement } = this.props; // We use object destructuring to pass the different properties inside the props
 
     return (

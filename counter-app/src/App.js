@@ -15,6 +15,22 @@ class App extends Component {
     ]
   };
 
+  // Lifecycle hooks:
+  // NOTE Lifecycle hook - Constructor - Constructor of the Component which has a state, is the perfect place to initialize that state. Inside constructor we dont need to use setState and we can directly set the state
+  // We cannot use lifecycle hooks inside a stateless functional component, as lifecycle hooks use class components
+  // NOTE Lifecycle hook - componentDidMount - This executes after the render method - This is the perfect place to write AJAX calls to get data from server, after the component has been rendered. Once the new data arrives, we can use setState inside so as to change the state of the component. Additionally, component is mounted means that the component is in the browser DOM. render changes the virtual DOM and then React updates the browser DOM and then the component is said to be mounted
+  // After all the children have also been rendered, then only the app mounts
+
+  constructor() {
+    super();
+    console.log("App - Constructor");
+  }
+
+  componentDidMount() {
+    console.log("App - Mounted"); // Printed after the render
+    // AJAX call
+  }
+
   handleReset = () => {
     // remember that to register clicks we use onClick and not onclick
     const counters = this.state.counters.map(c => {
@@ -28,7 +44,7 @@ class App extends Component {
     // console.log("Event Handler Called", counterID);
     const counters = this.state.counters.filter(c => c.id !== counterID);
     /* 
-    Here weare filtering out the key counterID from the counters list in the state of counters class. We have to remove counterID key-value pair from the counters list in the state, but we cannot do this by directly manipulating the state and set the state ourselves. In react, we let react change the state using setState, otherwise react wont be able to register the change. 
+    Here weare filtering out the key counterID from the counters list in the state of counters class. We have to remove counterID key-value pair from the counters list in the state, but we cannot do this by directly manipulating the state and set the state ourselves. In react, we let react change the state using setState, otherwise react wont be able to register the change. NOTE if we want to set state directly, we do it by setting the state inside the constructor
     To filter out the counterID key value pair from the counters list, we make a new const counters and save into it all the key-value pairs (of counters list) except the counterID key value pair. c => c.id !==counterID is defining c as an iterator variable to iterate over the list and filter out the counterID form the list - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter.
     Thus we do not change the state directly, when a counter is deleted. Rather we make a new counters list and override the old counters list using this new counters list, with the setState method. With setState, react knows that there is a change in state and therefore will register it render again.
     */
@@ -54,6 +70,8 @@ class App extends Component {
   };
 
   render() {
+    console.log("App - Rendered");
+
     return (
       <React.Fragment>
         <NavBar
