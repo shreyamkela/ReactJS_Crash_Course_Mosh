@@ -1,3 +1,8 @@
+// The navbar does not have any state and is thus a Stateless Functional Component
+// Thus there is no use of class and extending Component
+// We can simply wrtie the returned react fragment as an arrow function
+// This is done in navbar_v1
+
 import React, { Component } from "react";
 
 class NavBar extends Component {

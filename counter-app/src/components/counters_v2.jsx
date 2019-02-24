@@ -9,24 +9,23 @@ import Counter from "./counter_v2";
 
 class Counters extends Component {
   render() {
+    const { onReset, counters, onDelete, onIncrement } = this.props; // We use object destructuring to pass the different properties inside the props
+
     return (
       <div>
-        <button
-          onClick={this.props.onReset}
-          className="btn btn-primary btn-sm m-2"
-        >
+        <button onClick={onReset} className="btn btn-primary btn-sm m-2">
           Reset
         </button>
 
-        {this.props.counters.map(counter => (
+        {counters.map(counter => (
           // take in list of counters as a prop
           // Map all the items in the counters list of the state object. Map each to a counter object with a key equal to counter id
           // This whole counter tag is to send children props to the counter object. This can be used for example when we distribute components of dialog boxes to consumers and they can specify their own warning messages in the dialog box components through this children preperty. This is used to pass complex elements as children of the property
           <Counter
             key={counter.id}
             counter={counter}
-            onDelete={this.props.onDelete}
-            onIncrement={this.props.onIncrement}
+            onDelete={onDelete}
+            onIncrement={onIncrement}
             // Counter component raises an event which bubbles up to the parent i.e counters comp. Counters comp doesnt handle it rather it bubbles it up to the App component, which has the handler. This is where Redux can be used, to reduce these bubble ups. With redux, a change in the counter component which also has to be reflected on the navbar, can directly be handled, without the 2 bubble ups.
           />
         ))}

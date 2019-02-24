@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import NavBar from "./components/navbar";
+import NavBar from "./components/navbar_v1";
 import Counters from "./components/counters_v2";
 
 // State and event handlers were previously present in Counters component (counters_v1). But we moved them up to its parent i.e App.js, when navbar was introduced. We reuired that state changes update both the counters comp and the navabar comp therefore we have to move the state and the handlers from counters to app itself
