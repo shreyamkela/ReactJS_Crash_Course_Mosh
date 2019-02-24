@@ -25,7 +25,7 @@ class App extends Component {
     super();
     console.log("App - Constructor");
   }
-
+  // lifecycle hooks
   componentDidMount() {
     console.log("App - Mounted"); // Printed after the render
     // AJAX call

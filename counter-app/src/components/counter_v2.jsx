@@ -4,8 +4,9 @@
 import React, { Component } from "react"; // using { Component } with object destructuring - https://stackoverflow.com/questions/41768205/difference-between-import-react-and-import-component-syntax , https://medium.com/@AnnaJS15/a-simple-guide-to-destructuring-props-in-react-f02e6e51143a. For eg, in the object { key: value } if key and value variables have the same name then it can be just written as { key }
 
 class Counter extends Component {
+  // lifecycle hooks
   componentDidUpdate(prevProps, prevState) {
-    // This lifecycle hook is called when a component is updated.
+    // This lifecycle hook is called when a component is updated. This hook is called after componentWillUnmount
     // We can use this method to compare whether any props of the component has been changed or not after the update. If no change then no need to make AJAX call. If change then make AJAX call.
     // This is done as below:
     console.log("prevProps: ", prevProps);
@@ -14,6 +15,13 @@ class Counter extends Component {
     //   // Ajax call and get new data from server
     // } // Else, no ajax call
   }
+  // lifecycle hooks
+  componentWillUnmount() {
+    // this method is called just before a component is removed from the dom - fore eg. before a counter component is removed when delete is clicked. This hook is called before componentDidUpdate
+    // That is this is called just before the component is removed from the actual dom. Thus we can use this method to clean up, for eg. any timers or listeners that we had put up for this component being removed, otherwise it can cause memory leaks.
+    console.log("Counter - Unmount");
+  }
+
   render() {
     // On chrome developer tools we can see what is being changed with each render. It would show that only this below div is changing.
     //console.log("props", this.props); // All react components have a JS property called props and here it contains all the attributes set by the counters component
