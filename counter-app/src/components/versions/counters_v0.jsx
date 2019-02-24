@@ -1,3 +1,11 @@
+// Reset button of Counters component has to reset the state of the child counter components, as we have to update the value property of the state of each counter, when reset is clicked. But reset is a part of counters class instance and thus it cannot change the state of the child counter instances. The child counter instances have the counter value inside their state and the counters instance cannot change this.
+// This is because we are trying to manage the state of counter object from 2 places. One is inside the counter object itself when we use handleIncrement and the other is from outside that is the counters parent instance which is trying to changes state of all counters when reset is clicked. Thus there is no single source of truth i.e the state should of counter instance should be managed from only one place. Also, the local state object of counter class is executed only once - when a new counter object is created
+// To fix this we need to remove the local state from counter component and have a single source of truth governed by counters component.
+// We control the increment from the counters component and reflect it on the individual counter with the help of arrow functions inside the tags while rending the count display. Thus the counter components will be fully controlled by the counters component, they will not have their own local states.
+// This is implemented in counters_v1
+
+// There is 1 counters component that is the parent to 4 child counter components
+
 import React, { Component } from "react";
 import Counter from "./counter_v1";
 
@@ -9,6 +17,14 @@ class Counters extends Component {
       { id: 3, value: 0 },
       { id: 4, value: 0 }
     ]
+  };
+
+  handleReset = () => {
+    const counters = this.state.counter.map(c => {
+      c.value = 0;
+      return c;
+    });
+    this.setState({ counters });
   };
 
   handleDelete = counterID => {
@@ -26,6 +42,12 @@ class Counters extends Component {
   render() {
     return (
       <div>
+        <button
+          onclick={this.handleReset}
+          className="btn btn-primary btn-sm m-2"
+        >
+          Reset
+        </button>
         {/* <Counter />
         <Counter />
         <Counter />

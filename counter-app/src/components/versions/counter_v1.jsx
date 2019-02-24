@@ -1,9 +1,17 @@
+// Reset button of Counters component has to reset the state of the child counter components, as we have to update the value property of the state of each counter, when reset is clicked. But reset is a part of counters class instance and thus it cannot change the state of the child counter instances. The child counter instances have the counter value inside their state and the counters instance cannot change this.
+// This is because we are trying to manage the state of counter object from 2 places. One is inside the counter object itself when we use handleIncrement and the other is from outside that is the counters parent instance which is trying to changes state of all counters when reset is clicked. Thus there is no single source of truth i.e the state should of counter instance should be managed from only one place. Also, the local state object of counter class is executed only once - when a new counter object is created
+// To fix this we need to remove the local state from counter component and have a single source of truth governed by counters component.
+// We control the increment from the counters component and reflect it on the individual counter with the help of arrow functions inside the tags while rending the count display. Thus the counter components will be fully controlled by the counters component, they will not have their own local states.
+// This is implemented in counter_v2
+
 // There are 4 counter components inside 1 counters component
 
 import React, { Component } from "react"; // using { Component } with object destructuring - https://stackoverflow.com/questions/41768205/difference-between-import-react-and-import-component-syntax , https://medium.com/@AnnaJS15/a-simple-guide-to-destructuring-props-in-react-f02e6e51143a. For eg, in the object { key: value } if key and value variables have the same name then it can be just written as { key }
 
 class Counter extends Component {
   state = {
+    // This will be removed if the counters component fully controls the counter component and there is no local state in the counter components
+    // NOTE state instance is executed only once - when a new counter object is created
     // count: 0, // NOTE count is renamed to value when adding this.props.counter.value. Counters class is sending into counter class instance a prop counter which has the id, value, etc of the current counter
     value: this.props.counter.value, // value has been set for each counter in the Counters component and can be used here
     id: this.props.counter.id // Using the id set by props
@@ -48,6 +56,7 @@ class Counter extends Component {
   //   }
 
   handleIncrement = product => {
+    // This will be removed if the counters component fully controls the counter component and there is no local state in the counter components
     // id is passed with the arrow function inside onCLick. That id is the product
     // Using arrow function to serve handleIncrement event handler, without binding with constructor. This method is experimental according to Mosh. Can just use the constructor and non-arrow function event handler if it breaks
     // This is an event handler

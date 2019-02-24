@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
-import Counters from "./components/counters";
+import Counters from "./components/counters_v1";
 
 // const element = <h1>Hello World</h1>; // This is JSX which is the same as - var element = React.createElement("h1", null, "Hello World"); - Babel converts JSX into the JS language that browser can understand, at compile time. That is, JSX is just syntactical sugar to make developers feel more at home when manipulating html elements from javascript code.
 // console.log(element);
