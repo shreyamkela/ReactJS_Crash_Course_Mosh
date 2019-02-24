@@ -49,7 +49,7 @@ class App extends Component {
     Thus we do not change the state directly, when a counter is deleted. Rather we make a new counters list and override the old counters list using this new counters list, with the setState method. With setState, react knows that there is a change in state and therefore will register it render again.
     */
     // this.setState({ counters: counters }); // Can also be written as below
-    this.setState({ counters }); // Destructuring
+    this.setState({ counters }); // Destructuring. Set state as new counters list
   };
 
   handleIncrement = counter => {
@@ -69,6 +69,16 @@ class App extends Component {
     this.setState({ counters });
   };
 
+  handleAdd = () => {
+    // console.log("Event Handler Called", counterID);
+    const counters = this.state.counters;
+    const currentCounters = counters.length;
+    counters.push({ id: currentCounters + 1, value: 0 }); // push a new id-value pair into new counters list
+    console.log(counters);
+    // this.setState({ counters: counters }); // Can also be written as below
+    this.setState({ counters }); // Destructuring
+  };
+
   render() {
     console.log("App - Rendered");
 
@@ -84,7 +94,8 @@ class App extends Component {
             onReset={this.handleReset}
             onIncrement={this.handleIncrement}
             onDelete={this.handleDelete}
-          />{" "}
+            onAdd={this.handleAdd}
+          />
           {/* Pass reference to counters comp when counters comp raises an event */}
         </main>
       </React.Fragment>

@@ -11,12 +11,15 @@ class Counters extends Component {
   render() {
     console.log("Counters - Rendered");
 
-    const { onReset, counters, onDelete, onIncrement } = this.props; // We use object destructuring to pass the different properties inside the props
+    const { onReset, counters, onDelete, onIncrement, onAdd } = this.props; // We use object destructuring to pass the different properties inside the props
 
     return (
       <div>
         <button onClick={onReset} className="btn btn-primary btn-sm m-2">
           Reset
+        </button>
+        <button onClick={onAdd} className="btn btn-primary btn-sm m-2">
+          Add
         </button>
 
         {counters.map(counter => (
