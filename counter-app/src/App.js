@@ -69,6 +69,16 @@ class App extends Component {
     this.setState({ counters });
   };
 
+  handleDecrement = counter => {
+    const counters = [...this.state.counters]; // ...this.state.counters uses the spread operator to clone all the items of the counters list (of the state object) into a new counters const
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    counters[index].value <= 0
+      ? (counters[index].value = 0)
+      : counters[index].value--; // If counters[index].value > 0 then decrement otherwise counters[index].value=0
+    this.setState({ counters });
+  };
+
   handleAdd = () => {
     // console.log("Event Handler Called", counterID);
     const counters = this.state.counters;
@@ -93,6 +103,7 @@ class App extends Component {
             counters={this.state.counters} // Pass list of counters to the counters comp
             onReset={this.handleReset}
             onIncrement={this.handleIncrement}
+            onDecrement={this.handleDecrement}
             onDelete={this.handleDelete}
             onAdd={this.handleAdd}
           />

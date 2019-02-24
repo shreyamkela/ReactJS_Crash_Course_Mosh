@@ -38,6 +38,12 @@ class Counter extends Component {
           Increment
         </button>
         <button
+          onClick={() => this.props.onDecrement(this.props.counter)}
+          className="btn btn-secondary btn-sm m-2"
+        >
+          Decrement
+        </button>
+        <button
           // onClick={this.props.onDelete}
           onClick={() => {
             this.props.onDelete(this.props.counter.id);
@@ -57,14 +63,14 @@ class Counter extends Component {
   getBadgeClasses() {
     // Passing functions into jsx
     let classes = "badge m-2 badge-";
-    classes += this.props.counter.value === 0 ? "warning" : "primary"; //  Appending this CSS to the classes variable depending on the count. If not zero, colour is blue, else it is zero and yellow/warning colour
+    classes += this.props.counter.value <= 0 ? "warning" : "primary"; //  Appending this CSS to the classes variable depending on the count. If not zero, colour is blue, else it is zero and yellow/warning colour
     return classes;
   }
 
   formatCount() {
     // Passing functions into jsx
     const { value: count } = this.props.counter;
-    return count === 0 ? "Zero" : count;
+    return count <= 0 ? "Zero" : count;
   }
 }
 

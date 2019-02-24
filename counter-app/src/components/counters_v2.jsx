@@ -11,7 +11,14 @@ class Counters extends Component {
   render() {
     console.log("Counters - Rendered");
 
-    const { onReset, counters, onDelete, onIncrement, onAdd } = this.props; // We use object destructuring to pass the different properties inside the props
+    const {
+      onReset,
+      counters,
+      onDelete,
+      onIncrement,
+      onDecrement,
+      onAdd
+    } = this.props; // We use object destructuring to pass the different properties inside the props
 
     return (
       <div>
@@ -31,6 +38,7 @@ class Counters extends Component {
             counter={counter}
             onDelete={onDelete}
             onIncrement={onIncrement}
+            onDecrement={onDecrement}
             // Counter component raises an event which bubbles up to the parent i.e counters comp. Counters comp doesnt handle it rather it bubbles it up to the App component, which has the handler. This is where Redux can be used, to reduce these bubble ups. With redux, a change in the counter component which also has to be reflected on the navbar, can directly be handled, without the 2 bubble ups.
           />
         ))}
