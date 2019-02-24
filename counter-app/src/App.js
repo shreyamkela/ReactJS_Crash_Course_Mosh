@@ -56,7 +56,10 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <NavBar />
+        <NavBar
+          totalCounters={this.state.counters.filter(c => c.value > 0).length}
+        />
+        {/* Can pass the number of counters by simply - this.state.counters.length. But we need not count in the navbar those counter comp which have value zero. Therefore we filter and count only those that have value > 0*/}
         <main className="container">
           <Counters
             counters={this.state.counters} // Pass list of counters to the counters comp

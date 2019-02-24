@@ -74,6 +74,7 @@ class Counters extends Component {
         <Counter />
         <Counter /> Instead of hardcoding 4 Counter components to pass them here, we can set 4 counters in the state and then pass that state object here. THis is done below*/}
         {this.state.counters.map(counter => (
+          // Map all the items in the counters list of the state object. Map each to a counter object with a key equal to counter id
           /* <Counter
             key={counter.id}
             value={counter.value}
@@ -93,7 +94,6 @@ class Counters extends Component {
             onIncrement={this.handleIncrement}
           />
         ))}
-        {/* Map all the items in the counters list of the state object. Map each to a counter object with a key equal to counter id */}
       </div>
     );
   }
