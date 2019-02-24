@@ -6,8 +6,9 @@ class Counter extends Component {
   state = {
     // count: 0, // NOTE count is renamed to value when adding this.props.value
     value: this.props.value, // value has been set for each counter in the Counters component and can be used here
-    tags: []
-  };
+    id: this.props.id // Using the id set by props
+    // tags: []
+  }; // Difference between props and state - Props are read only objects that are associated with objects, and props of one components can be read by other components. Props can be sent as inputs to a component. Props are defined when we use an object in JSX. For eg, <Counter prop1="..." prop2="..."> ... </Counter>. Input porps can set the state. State is readable and writable (setState()) but is local to a component. State of one component cannot be accessed by other components
 
   //   constructor() { //
   //       // This is required for event handler handleIncrement. Can also use arrow function event handlers instead of binding the event handler using constructor, but that method is experimental according to Mosh. Can just use this constructor and non-arrow function event handler if it breaks
@@ -26,19 +27,19 @@ class Counter extends Component {
     fontWeight: "bold"
   };
 
-  renderTags() {
-    // To pass an if else inside JSX. Here if there are no tags, we output the below string, otherwise we output the tags themselves
-    if (this.state.tags.length === 0) return <p> There are no tags! </p>;
+  // renderTags() {
+  //   // To pass an if else inside JSX. Here if there are no tags, we output the below string, otherwise we output the tags themselves
+  //   if (this.state.tags.length === 0) return <p> There are no tags! </p>;
 
-    return (
-      // To pass an iterate kind of method inside JSX. Now here we have eto include the tags list. We do this by using the unordered list tag. Then inside that we need to render each list item. We dont have loops in JSX, like in angular but we have the map function that we can use inside JSX to list all the elements inside an object. indie the map function we use an arrow function to list each item using li tag. Rach list item needs to have a unique id for React to be able to function properly (because if the list ids are same then react doesnt know how to track individual item changes inside the list), and for that we save the value of tage as the key itself, for the li tag
-      <ul>
-        {this.state.tags.map(tag => (
-          <li key={tag}> {tag} </li>
-        ))}
-      </ul>
-    );
-  }
+  //   return (
+  //     // To pass an iterate kind of method inside JSX. Now here we have eto include the tags list. We do this by using the unordered list tag. Then inside that we need to render each list item. We dont have loops in JSX, like in angular but we have the map function that we can use inside JSX to list all the elements inside an object. indie the map function we use an arrow function to list each item using li tag. Rach list item needs to have a unique id for React to be able to function properly (because if the list ids are same then react doesnt know how to track individual item changes inside the list), and for that we save the value of tage as the key itself, for the li tag
+  //     <ul>
+  //       {this.state.tags.map(tag => (
+  //         <li key={tag}> {tag} </li>
+  //       ))}
+  //     </ul>
+  //   );
+  // }
 
   //   handleIncrement() { // Binding the handleIncrement event handler using constructor
   //     // This is an event handler
@@ -59,10 +60,12 @@ class Counter extends Component {
   };
 
   render() {
+    // On chrome developer tools we can see what is being changed with each render. It would show that only this below div is changing.
     //console.log("props", this.props); // All react components have a JS property called props and here it contains all the attributes set by the counters component
 
     return (
       <div>
+        {/* <h4>{this.props.children}</h4> This is how we pass a children of a property i.e children props, from the counters component into the counter component*/}
         <span style={this.styles} className={this.getBadgeClasses()}>
           {this.formatCount()}
         </span>
@@ -75,17 +78,26 @@ class Counter extends Component {
         */}
         <button
           onClick={() => {
-            this.handleIncrement({ id: 1 });
+            this.handleIncrement({ id: this.state.id }); // Could also have written id: this.props.id but as a good practice we pass the properties into the state and them use them by using the state object
           }}
           className="btn btn-secondary btn-sm"
         >
           Increment
-        </button>{" "}
+        </button>
         {/* We are using this.handleIncrement and not this.handleIncrement() here as we are passing a reference to handleIncrement and not calling handleIncrement(). In vanilla JS it would have been handleIncrement() here but his is how it is done in JSX, as here we reference it */}
-        {this.renderTags()}
+        {/* {this.renderTags()} */}
         {/*This is how we comment in JSX, i.e multiline comment within curly braces. Here we have passed the if else method into JSX. We can also directly do an if else kind of structure inside JSX using && operator*/}
-        {this.state.tags.length === 0 && "Please create a new tag!"}{" "}
+        {/* {this.state.tags.length === 0 && "Please create a new tag!"} */}
         {/* This is using if else with &&, directly inside JSX. In Javascript, we can apply logical operators even on non-boolean objects. The && and || operators actually return the value of one of the specified operands, so if these operators are used with non-Boolean values, they will return a non-Boolean value - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_Operators . This uses the Truthy and falsy concept of javascript - https://stackoverflow.com/questions/35642809/understanding-javascript-truthy-and-falsy . In truthy, if all the operands are true, then the final operand is the result*/}
+        <button
+          onClick={this.props.onDelete}
+          className="btn btn-danger btn-sm m-2"
+        >
+          Delete
+        </button>
+        {/* NOTE In React -  The component that owns a piece of the state, should be the one modifying it. Therefore we cannot have a counter_v1 component deleting itself from the state of counters (when we want to delete a counter component from counters). Thus we have to include the delete logic into counters itself. Different counters are listed in the state of counters class and if we want to remove any then delete logic should also be in the counters class only  */}
+        {/*We have used onDelete={this.handleDelete} in Counters class, to register an event handler prop that passes a reference to this.handleDelete so that counter object can refer to this method of the counters class. We could not have added handleDelete method in counter class itself as handleDelete manipulates the state of counters class and the component that owns a piece of the state, should be the one modifying it. Now in counter class, we can reference this method for the current object and use this event handler for the deletion of that particular counter object. This is raising and handling of events. Counter class will raise an event and Counters class will handle that event. Counters class provides the handleDelete method which can be instantiated by counter object for the current object and can be used to delete the object.*/}
+        {/* Thus onClick will make a reference or instantiate the handleDelete method of Counters class for this object as onDelete has been set as a prop in Counters class */}
       </div>
     );
   }

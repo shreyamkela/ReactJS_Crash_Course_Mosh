@@ -1,3 +1,5 @@
+// Newer version of this file is counter_v1
+
 import React, { Component } from "react"; // using { Component } with object destructuring - https://stackoverflow.com/questions/41768205/difference-between-import-react-and-import-component-syntax , https://medium.com/@AnnaJS15/a-simple-guide-to-destructuring-props-in-react-f02e6e51143a
 
 class Counter extends Component {
