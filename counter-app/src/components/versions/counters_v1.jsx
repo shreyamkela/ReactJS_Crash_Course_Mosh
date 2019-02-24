@@ -1,3 +1,11 @@
+// Use this with counter_v2 and index.js which renders <Counters> component
+// For newer version refer counters_v2
+// The navbar is at the same level as counters component. But there is no parent child relationship between counters component and navbar, rather they are siblings. How do we pass state between siblings? What we want to do is change the navbar count according to the bumber of counters, which is controlled by the counters component.
+// To change both navbar and counters component when a counter is deleted or added, we need to move the state of Counters component up by 1 level (as navbar and counters component are siblings). Their parent is the app itself i.e app.js. So if the state is controlled by the app itself, it can be used by the children navbar and counters component, by using props.
+// This is done in counters_v2. All the state and methods that modify the state i.e the event handler methods are moved up to the App itself
+// NOTE Here navbar and counters component are siblings. What if there are 2 nodes that we want to update that dont have such a close relationship? In big projects their are many nodes that have inter related updates bu are very far away in the tre structure. To tackle updates in such cases, we use reducers such as Redux
+// In redux, the updates are in global therefore every has access to it. Also, here we have move the state update to App, which is essentially global. So here, we could potentially be doing what Redux does actually.
+
 // There is 1 counters component that is the parent to 4 child counter components. The counter components are fully controlled by the counters component and there is no local state in the counter components. The counter components are 'controlled' components - no local state. A controlled component receives all the data via props and raises events when ever any data needs to be changed. The controller component handles these events and sends the data via props.
 // For previous version refer counters_v0
 
